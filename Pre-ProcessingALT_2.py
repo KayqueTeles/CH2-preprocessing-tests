@@ -29,10 +29,8 @@ from keras.utils import to_categorical
 # In[10]:
 
 
-#data_dir = '/home/dados229/cenpes/DataChallenge2' #### diretorio original do Patrick
-data_dir = '/home/dados2T/DataChallenge2'
-#data_dirALT = '/home/dados229/cenpes/DataChallenge2ALTERADO' #### diretório para teste do pre processamento do Patrick
-data_dirALT = '/home/dados2T/DataChallenge2'
+data_dir = '/home/dados229/cenpes/DataChallenge2' #### diretorio original do Patrick
+data_dirALT = '/home/dados229/cenpes/DataChallenge2ALTERADO' #### diretório para teste do pre processamento do Patrick
 catalog_name = 'image_catalog2.0train_corrigido.csv'
 
 """ Load catalog before images """
@@ -53,10 +51,10 @@ is_lens = 1.0*is_lens
 
 
 reload = False #### se quiser criar novamento os images_hjy.npy e/ou images_vis.npy
-PP_VIS = True
-PP_HJY = True
-Plot_Stamps_HJY = False
-Plot_Stamps_VIS = False
+PP_VIS = False
+PP_HJY = False
+Plot_Stamps_HJY = True
+Plot_Stamps_VIS = True
 
 
 if len(channels) > 1:
@@ -125,7 +123,7 @@ if reload:
 ################################################################################
 #########  PRE PROCESS AND NORMALIZE ------ VIS (1 channel)
 if PP_VIS:
-    #data_dir = '/home/dados229/cenpes/DataChallenge2'
+    data_dir = '/home/dados229/cenpes/DataChallenge2'
     catalog_name = 'image_catalog2.0train_corrigido.csv'
     # print("Load images VIS and HJY")
     images_vis = np.load(os.path.join(data_dirALT,'images_vis.npy'))
@@ -171,8 +169,7 @@ if PP_VIS:
     images_vis = (images_vis - vis_p_min)/(vis_p_max - vis_p_min)
     print(images_vis.min(), images_vis.max())
 
-    np.save(os.path.join(data_dirALT, 'images_vis_new.npy'), images_vis)
-    print(' saved.')
+    np.save(os.path.join(data_dirALT, 'images_vis_normalized.npy'), images_vis)
 
     del images_vis
 
@@ -180,7 +177,7 @@ if PP_VIS:
 ################################################################################
 #########  PRE PROCESS AND NORMALIZE ------ HJY - (3 channels)
 if PP_HJY:
-    #data_dir = '/home/dados229/cenpes/DataChallenge2'
+    data_dir = '/home/dados229/cenpes/DataChallenge2'
     catalog_name = 'image_catalog2.0train_corrigido.csv'
     # print("Load images VIS and HJY")
     # images_vis = np.load(os.path.join(data_dirALT, 'images_vis.npy'))
@@ -260,11 +257,10 @@ if PP_HJY:
 
 
 
-    np.save(os.path.join(data_dirALT, 'images_hjy_new.npy'), images_hjy)
-    print(' saved.')
+    np.save(os.path.join(data_dirALT, 'images_hjy_normalized.npy'), images_hjy)
 
 if Plot_Stamps_HJY:
-    #data_dir = '/home/dados229/cenpes/DataChallenge2'
+    data_dir = '/home/dados229/cenpes/DataChallenge2'
 
     images_hjy_normalized = np.load(os.path.join(data_dirALT, 'images_hjy_normalized.npy'))
     print(images_hjy_normalized.shape)
@@ -290,7 +286,7 @@ if Plot_Stamps_HJY:
     del images_hjy_normalized
 
 if Plot_Stamps_VIS:
-    #data_dir = '/home/dados229/cenpes/DataChallenge2'
+    data_dir = '/home/dados229/cenpes/DataChallenge2'
 
     images_vis_normalized = np.load(os.path.join(data_dirALT, 'images_vis_normalized.npy'))
     print(images_vis_normalized.shape)
@@ -318,7 +314,6 @@ is_lens = is_lens[idxs2keep]
 is_lens = to_categorical(is_lens, 2)
 np.save(os.path.join(data_dirALT, 'Y.npy'), is_lens)
 print(is_lens.shape)
-
 
 
 
